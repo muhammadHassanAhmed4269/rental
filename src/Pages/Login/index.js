@@ -2,6 +2,7 @@ import React from "react";
 import Backgroundimg from "../../Assets/signupBackground.png";
 import Laptopimg from "../../Assets/signupLaptop.png";
 import Fblogo from "../../Assets/fbLogo.png";
+import { Link } from "react-router-dom";
 const Index = () => {
   return (
     <div
@@ -24,7 +25,9 @@ const Index = () => {
           <h1 class="text-[42px] text-white font-bold mb-4">Welcome </h1>
           <p class="text-white  mb-6">
             login to Rental Mate or{" "}
-            <span className="text-[#1976D2]">create an account</span>
+            <span className="text-[#1976D2]">
+              <Link to={"/Signup"}>create an account</Link>{" "}
+            </span>
           </p>
           <div class="relative mt-5 flex items-center  rounded-2xl bg-[#d9d9d9] bg-opacity-60 h-[52px] w-[437px]">
             <input

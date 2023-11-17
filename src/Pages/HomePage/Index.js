@@ -13,6 +13,7 @@ import Handshake from "../../Assets/Handshake.png";
 import testimonial1 from "../../Assets/testimonial1.png";
 import testimonial2 from "../../Assets/testimonial2.png";
 import testimonial3 from "../../Assets/testimonial3.png";
+import { Link } from "react-router-dom";
 const Index = () => {
   const containerStyle = {
     position: "relative",
@@ -26,47 +27,66 @@ const Index = () => {
   return (
     <div>
       <Navbar />
-      <div class="mx-auto bg-white mt-3">
-        <nav class="flex justify-center">
-          <div class="w-4/5">
-            <ul class="flex space-x-4">
-              <li>
-                <a href="/" class="py-2 px-4 text-black font-semibold ">
-                  Electronics
-                </a>
-              </li>
-              <li>
-                <a href="/" class="py-2 px-4 text-black font-semibold">
-                  Home and Garden
-                </a>
-              </li>
-              <li>
-                <a href="/" class="py-2 px-4 text-black font-semibold">
-                  Party
-                </a>
-              </li>
-              <li>
-                <a href="/" class="py-2 px-4 text-black font-semibold">
-                  Film and Photography
-                </a>
-              </li>
-              <li>
-                <a href="/" class="py-2 px-4 text-black font-semibold">
-                  Sports and Leisure
-                </a>
-              </li>
-              <li>
-                <a href="/" class="py-2 px-4 text-black font-semibold">
-                  Construction Tools
-                </a>
-              </li>
-              <li>
-                <a href="/" class="py-2 px-4 text-black font-semibold">
-                  Other
-                </a>
-              </li>
-            </ul>
-          </div>
+      <div class="mx-auto w-3/4 bg-white mt-3">
+        <nav class="">
+          <ul class="flex  justify-between">
+            <li>
+              <Link
+                to={"/Categories"}
+                class="py-2 px-4 text-black font-semibold "
+              >
+                Electronics
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/Categories"}
+                class="py-2 px-4 text-black font-semibold"
+              >
+                Home and Garden
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/Categories"}
+                class="py-2 px-4 text-black font-semibold"
+              >
+                Party
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/Categories"}
+                class="py-2 px-4 text-black font-semibold"
+              >
+                Film and Photography
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/Categories"}
+                class="py-2 px-4 text-black font-semibold"
+              >
+                Sports and Leisure
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/Categories"}
+                class="py-2 px-4 text-black font-semibold"
+              >
+                Construction Tools
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/Categories"}
+                class="py-2 px-4 text-black font-semibold"
+              >
+                Other
+              </Link>
+            </li>
+          </ul>
         </nav>
       </div>
       <Slider />
@@ -249,10 +269,10 @@ const Index = () => {
           </div>
         </div>
       </div>
-      <p className="font-semibold text-3xl ml-16 mt-4">
+      <p className="font-semibold text-3xl ml-16 mt-16">
         Demystifying the art of borrowing{" "}
       </p>
-      <div className="flex mt-24 w-3/4 mx-auto justify-between">
+      <div className="flex mt-24 w-3/4 mx-auto items-center justify-between">
         <div class="flex flex-col justify-center w-72 ">
           <div class="w-32 h-32 bg-[#4CAF50] justify-center items-center flex rounded-md mx-auto">
             <svg
@@ -304,7 +324,7 @@ const Index = () => {
             </p>
           </div>
         </div>
-        <div class="flex flex-col justify-center w-72 ">
+        <div class="flex flex-col justify-center mb-11 w-72 ">
           <div class="w-32 h-32  justify-center bg-[#4CAF50] items-center flex rounded-md mx-auto">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -338,7 +358,7 @@ const Index = () => {
             </p>
           </div>
         </div>
-        <div class="flex flex-col justify-center w-72 ">
+        <div class="flex flex-col justify-center w-72 mb-5 ">
           <div class="w-32 h-32  justify-center bg-[#4CAF50] items-center flex rounded-md mx-auto">
             <svg
               xmlns="http://www.w3.org/2000/svg"
