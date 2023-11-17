@@ -52,7 +52,9 @@ const Index = () => {
         <div className="flex ml-8">
           <div className="flex items-center">
             <div className="text-white text-lg mr-4">Home</div>
-            <div className="text-white text-lg mr-4 ml-16">About</div>
+            <Link to={"/Listing"} className="text-white text-lg mr-4 ml-16">
+              About
+            </Link>
             {/* <div className="text-white text-lg mr-4">
             Account
             <i className="fa fa-caret-down ml-1"></i>

@@ -30,7 +30,7 @@ const Index = () => {
     console.log("New quantity value: " + newValue);
   };
   return (
-    <div className="w-11/12 mx-auto bg-gray-200 p-4">
+    <div className="w-11/12 mx-auto bg-[#697eb5] p-4">
       <div className="">
         <div className="flex flex-col items-center">
           {mainImageIndex !== -1 && (
