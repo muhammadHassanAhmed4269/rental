@@ -51,10 +51,10 @@ const Index = () => {
 
         <div className="flex ml-8">
           <div className="flex items-center">
-            <div className="text-white text-lg mr-4">Home</div>
-            <Link to={"/Listing"} className="text-white text-lg mr-4 ml-16">
-              About
+            <Link to={"/"} className="text-white text-lg mr-4">
+              Home
             </Link>
+            <div className="text-white text-lg mr-4 ml-16">About</div>
             {/* <div className="text-white text-lg mr-4">
             Account
             <i className="fa fa-caret-down ml-1"></i>

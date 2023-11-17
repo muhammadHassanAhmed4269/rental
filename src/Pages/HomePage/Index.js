@@ -197,11 +197,11 @@ const Index = () => {
           </div>
         </div>
       </div>
-      <div className="w-full mt-16  flex justify-center  ">
+      <Link to={"/Listing"} className="w-full mt-16  flex justify-center  ">
         <button class="w-56 h-11 ml-10  rounded-xl bg-[#4CAF50] text-white font-bold mr-5">
           List an item{" "}
         </button>
-      </div>
+      </Link>
 
       <div className="w-full bg-[#BDFFC0]  mt-3">
         <p className="font-semibold text-3xl ml-16 pt-10">
