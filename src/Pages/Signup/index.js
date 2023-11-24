@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Backgroundimg from "../../Assets/signupBackground.png";
 import Laptopimg from "../../Assets/signupLaptop.png";
 import Fblogo from "../../Assets/fbLogo.png";
 import { Link } from "react-router-dom";
+import { registerUser, isUserRegistered } from "../../userService";
+
 const Index = () => {
+  const handleSignUp = (userData) => {
+    if (isUserRegistered(userData.email)) {
+      alert("User already exists. Please log in.");
+      setName("");
+      setPassword("");
+      setEmail("");
+      return;
+    }
+
+    const registrationSuccessful = registerUser(userData);
+
+    if (registrationSuccessful) {
+      alert("Registration successful!");
+      setName("");
+      setPassword("");
+      setEmail("");
+    } else {
+      alert("Registration failed. User already exists.");
+      setName("");
+      setPassword("");
+      setEmail("");
+    }
+  };
+
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   return (
     <div
       className="relative "
@@ -34,6 +63,8 @@ const Index = () => {
           <div class="relative flex items-center mt-7  rounded-2xl bg-[#d9d9d9] bg-opacity-60 h-[52px] w-[437px]">
             <input
               type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               placeholder="Name"
               class="w-full py-2 pl-12 pr-4 text-gray-700 bg-transparent placeholder-gray-400 border-none focus:outline-none"
             />
@@ -54,10 +85,38 @@ const Index = () => {
               </svg>
             </div>
           </div>
+          <div class="relative mt-5 flex items-center  rounded-2xl bg-[#d9d9d9] bg-opacity-60 h-[52px] w-[437px]">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email Address or Phone Number"
+              class="w-full py-2 pl-12 pr-4 text-gray-700 bg-transparent placeholder-gray-400 border-none focus:outline-none"
+            />
+            <div class="absolute left-3 top-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="24"
+                viewBox="0 0 28 24"
+                fill="none"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M4.375 5.25L3.5 6V18L4.375 18.75H23.625L24.5 18V6L23.625 5.25H4.375ZM5.25 7.6955V17.25H22.75V7.69525L13.9999 14.5136L5.25 7.6955ZM21.3615 6.75H6.63817L13.9999 12.4864L21.3615 6.75Z"
+                  fill="black"
+                  fill-opacity="0.25"
+                />
+              </svg>
+            </div>
+          </div>
           <div class="relative flex mt-5 items-center  rounded-2xl bg-[#d9d9d9] bg-opacity-60 h-[52px] w-[437px]">
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               class="w-full py-2 pl-12 pr-4 text-gray-700 bg-transparent placeholder-gray-400 border-none focus:outline-none"
             />
             <div class="absolute left-3 top-3">
@@ -98,32 +157,12 @@ const Index = () => {
               </svg>
             </div>
           </div>
-          <div class="relative mt-5 flex items-center  rounded-2xl bg-[#d9d9d9] bg-opacity-60 h-[52px] w-[437px]">
-            <input
-              type="email"
-              placeholder="Email Address or Phone Number"
-              class="w-full py-2 pl-12 pr-4 text-gray-700 bg-transparent placeholder-gray-400 border-none focus:outline-none"
-            />
-            <div class="absolute left-3 top-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="24"
-                viewBox="0 0 28 24"
-                fill="none"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M4.375 5.25L3.5 6V18L4.375 18.75H23.625L24.5 18V6L23.625 5.25H4.375ZM5.25 7.6955V17.25H22.75V7.69525L13.9999 14.5136L5.25 7.6955ZM21.3615 6.75H6.63817L13.9999 12.4864L21.3615 6.75Z"
-                  fill="black"
-                  fill-opacity="0.25"
-                />
-              </svg>
-            </div>
-          </div>
+
           <div className="flex justify-between items-center w-[387px] mt-12">
-            <button class="w-[220px] h-[45px] rounded-3xl bg-[#0B2F8A] text-white">
+            <button
+              onClick={() => handleSignUp({ name, password, email })}
+              class="w-[220px] h-[45px] rounded-3xl bg-[#0B2F8A] text-white"
+            >
               SignUp
             </button>
             <p className="text-white">Or</p>

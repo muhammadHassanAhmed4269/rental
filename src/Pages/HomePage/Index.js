@@ -27,68 +27,7 @@ const Index = () => {
   return (
     <div>
       <Navbar />
-      <div class="mx-auto w-3/4 bg-white mt-3">
-        <nav class="">
-          <ul class="flex  justify-between">
-            <li>
-              <Link
-                to={"/Categories"}
-                class="py-2 px-4 text-black font-semibold "
-              >
-                Electronics
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/Categories"}
-                class="py-2 px-4 text-black font-semibold"
-              >
-                Home and Garden
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/Categories"}
-                class="py-2 px-4 text-black font-semibold"
-              >
-                Party
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/Categories"}
-                class="py-2 px-4 text-black font-semibold"
-              >
-                Film and Photography
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/Categories"}
-                class="py-2 px-4 text-black font-semibold"
-              >
-                Sports and Leisure
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/Categories"}
-                class="py-2 px-4 text-black font-semibold"
-              >
-                Construction Tools
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={"/Categories"}
-                class="py-2 px-4 text-black font-semibold"
-              >
-                Other
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+
       <Slider />
       <p className="font-semibold text-3xl ml-16 mt-4">
         How Rental Mate works?

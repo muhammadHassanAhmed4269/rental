@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Backgroundimg from "../../Assets/signupBackground.png";
 import Laptopimg from "../../Assets/signupLaptop.png";
 import Fblogo from "../../Assets/fbLogo.png";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { loginUser } from "../../userService";
 const Index = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    const user = loginUser({ email, password });
+
+    if (user) {
+      navigate("/");
+    } else {
+      alert("User dont exist");
+    }
+  };
   return (
     <div
       className="relative "
@@ -32,6 +46,8 @@ const Index = () => {
           <div class="relative mt-5 flex items-center  rounded-2xl bg-[#d9d9d9] bg-opacity-60 h-[52px] w-[437px]">
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Email Address or Phone Number"
               class="w-full py-2 pl-12 pr-4 text-gray-700 bg-transparent placeholder-gray-400 border-none focus:outline-none"
             />
@@ -57,6 +73,8 @@ const Index = () => {
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               class="w-full py-2 pl-12 pr-4 text-gray-700 bg-transparent placeholder-gray-400 border-none focus:outline-none"
             />
             <div class="absolute left-3 top-3">
@@ -101,7 +119,10 @@ const Index = () => {
             Forget Password?
           </p>
           <div className="flex justify-between items-center w-[387px] mt-12">
-            <button class="w-[220px] h-[45px] rounded-3xl bg-[#0B2F8A] text-white">
+            <button
+              onClick={handleLogin}
+              class="w-[220px] h-[45px] rounded-3xl bg-[#0B2F8A] text-white"
+            >
               Login
             </button>
             <p className="text-white">Or</p>

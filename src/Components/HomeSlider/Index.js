@@ -32,10 +32,10 @@ const Index = () => {
   };
 
   const customArrowStyles = {
-    fontSize: "24px", // Adjust the font size as needed
-    color: "#fff", // Arrow color
-    borderRadius: "50%", // Make it round
-    padding: "8px", // Adjust padding as needed
+    fontSize: "24px",
+    color: "#fff",
+    borderRadius: "50%",
+    padding: "8px",
   };
 
   return (
@@ -49,7 +49,7 @@ const Index = () => {
           autoplay={!isHovered}
           autoplayInterval={2000}
           wrapAround={true}
-          renderBottomCenterControls={() => null} // Disable default controls
+          renderBottomCenterControls={() => null}
           renderCenterLeftControls={({ previousSlide }) => (
             <button style={customArrowStyles} onClick={previousSlide}>
               <svg

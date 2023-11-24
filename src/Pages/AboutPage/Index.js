@@ -1,0 +1,80 @@
+import React from "react";
+import AboutBanner from "../../Assets/AboutBanner.png";
+import Navbar from "../../Components/Navbar/index";
+import Footer from "../../Components/Footer/Index";
+const Index = () => {
+  return (
+    <div>
+      <Navbar />
+      <div
+        className="mt-6 relative bg-cover bg-center w-full h-[530px]"
+        style={{ backgroundImage: `url(${AboutBanner})` }}
+      >
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div
+            className="w-[878px] h-[319px] flex justify-center items-center rounded-[50px] p-8 "
+            style={{
+              background:
+                "linear-gradient(145deg, rgba(244, 244, 244, 0.40) -4.23%, rgba(244, 244, 244, 0.20) 102.58%, rgba(244, 244, 244, 0.20) 102.58%)",
+              boxShadow: " 0px 4px 15px 0px rgba(11, 47, 138, 0.60)",
+            }}
+          >
+            <p className="text-white text-center font-bold text-[50px]">
+              ABOUT US
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="w-11/12 mb-10 mx-auto">
+        <div className="mt-16">
+          <h1 className="font-bold text-xl">
+            Welcome to Lend Anything, your one-stop shop for borrowing and
+            lending anything!
+          </h1>
+          <p className="mt-10 text-xl">
+            We believe that sharing resources is essential for building a more
+            sustainable and equitable world. That's why we've <br /> created
+            LendAnything, a platform that connects people who have things they
+            don't need with people who need those <br /> things
+          </p>
+        </div>
+        <div className="mt-16">
+          <h1 className="font-bold text-xl">How does it work?</h1>
+          <p className="mt-10 text-xl">
+            To lend an item, simply create a listing on our website. Be sure to
+            include a description of the item, photos, and your <br />{" "}
+            availability. Once your listing is active, other users will be able
+            to browse and borrow it. <br /> To borrow an item, simply search for
+            what you need on our website. Once you've found an item you're
+            interested in, contact <br /> the lender to arrange the borrowing
+          </p>
+        </div>
+        <div className="mt-16">
+          <h1 className="font-bold text-xl">
+            Why should you use LendAnything?
+          </h1>
+          <p className="mt-10 text-xl">
+            There are many benefits to using LendAnything, including:
+            <ol>
+              <li className="list-disc ml-8">
+                Save money: Borrowing items instead of buying them can save you
+                a lot of money.
+              </li>
+              <li className="list-disc ml-8">
+                Reduce waste: By sharing resources, we can help to reduce the
+                amount of waste going to landfills.
+              </li>
+              <li className="list-disc ml-8">
+                Build community: LendAnything is a great way to connect with
+                your neighbors and build a sense of community.
+              </li>
+            </ol>
+          </p>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+export default Index;

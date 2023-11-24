@@ -46,8 +46,8 @@ const Index = () => {
           <div className="font-bold text-xl mb-2 text-black mt-6">
             Product Name
           </div>
-          <div className="flex justify-between items-center mt-6">
-            <p className="text-[#1E6200] text-xl">Price</p>
+          <div className="flex justify-between items-center mt-3">
+            <p className="text-[#1E6200] font-bold text-xl">Price</p>
             <div className="flex items-center ml-14">
               <div>
                 {[...Array(5)].map((_, index) => (
@@ -58,16 +58,20 @@ const Index = () => {
                     }`}
                     onClick={() => handleStarClick(index)}
                   >
-                    &#9733; {/* Unicode character for a star */}
+                    &#9733;
                   </span>
                 ))}
               </div>
               <p>(2)</p>
             </div>
           </div>
+          <p className=" mt-2 font-bold">
+            {" "}
+            Distance <span className="ml-4">7Km</span>
+          </p>
         </div>
       </div>
-      <button class="w-56 h-11 mt-8 ml-11  rounded-xl bg-[#4CAF50] text-white font-bold mr-5">
+      <button class="w-56 h-11 mt-3  ml-11  rounded-xl bg-[#4CAF50] text-white font-bold mr-5">
         Add To Cart{" "}
       </button>
     </div>

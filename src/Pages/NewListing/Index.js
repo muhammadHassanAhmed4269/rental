@@ -25,8 +25,6 @@ const Index = () => {
     setImages(updatedImages);
   };
   const handleQuantityChange = (newValue) => {
-    // Update the state or perform any other necessary actions based on the new value.
-    // For example, set it to a component's state or use it for further processing.
     console.log("New quantity value: " + newValue);
   };
   return (
