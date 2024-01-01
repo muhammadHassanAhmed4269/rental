@@ -23,6 +23,10 @@ const verifyToken = require("./middlewares/verifyToken");
 // const renterRoutes = require("./routes/renterRoutes");
 // const adminRoutes = require("./routes/adminRoutes");
 
+app.get("/", (req, res) => {
+  res.send("Server Live");
+});
+
 app.use("/auth", authRoutes);
 
 app.use(verifyToken);
