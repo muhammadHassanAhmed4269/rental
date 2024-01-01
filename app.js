@@ -35,6 +35,10 @@ app.use("/products", productRoutes);
 // app.use("/orders", renterRoutes);
 // app.use("/admin", adminRoutes);
 
+app.use((req, res, next) => {
+  res.status(404).send("404 - Invalid Route");
+});
+
 // Start Server
 const PORT = process.env.PORT || 9876;
 app.listen(PORT, () => {
