@@ -2,8 +2,32 @@
   "version": 2,
   "builds": [
     {
-      "src": "app.js",
+      "src": "./app.js",
       "use": "@vercel/node"
+    }
+  ],
+  "controllers":[
+     {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "middlewares":[
+     {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "models":[
+     {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "routes":[
+     {
+      "src": "/(.*)",
+      "dest": "/"
     }
   ],
   "env": {
