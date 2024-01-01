@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "./app.js",
+      "src": "/app.js",
       "use": "@vercel/node"
     }
   ],
   "routes":[
      {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "/app.js"
     }
   ],
   "env": {
@@ -22,7 +22,7 @@
     "PORT": "9876"
     },
     "commands": {
-      "build": "npm install && npm install express nodemon bcrypt jsonwebtoken dotenv axios mongodb mongoose cors multer google-auth-library && npm run build"
+      "build": "npm install && npm run build"
     }
   }
 }

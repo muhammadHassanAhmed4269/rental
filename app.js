@@ -5,22 +5,17 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Error connecting to MongoDB:", err));
-
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+// app.use(cors());
 
 // Routes
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
 const verifyToken = require("./middlewares/verifyToken");
+const dbConnector = require("./database/mongo");
 // const orderRoutes = require("./routes/orderRoutes");
 // const renterRoutes = require("./routes/renterRoutes");
 // const adminRoutes = require("./routes/adminRoutes");
@@ -40,7 +35,8 @@ app.use("/products", productRoutes);
 // app.use("/admin", adminRoutes);
 
 // Start Server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 9876;
 app.listen(PORT, () => {
+  dbConnector;
   console.log(`Server started on port ${PORT}`);
 });
