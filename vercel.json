@@ -6,6 +6,12 @@
       "use": "@vercel/node"
     }
   ],
+  "routes":[
+     {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
   "env": {
     "MONGO_URL": "mongodb+srv://hassan4269:BsBYbrzmFVE7Y5mS@cluster-rental-mate.hosimbv.mongodb.net/?retryWrites=true&w=majority",
     "PORT": "9876"
