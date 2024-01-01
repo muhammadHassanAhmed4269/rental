@@ -22,7 +22,7 @@
     "PORT": "9876"
     },
     "commands": {
-      "build": "npm install && npm run build"
+      "build": "npm install && npm install express nodemon bcrypt jsonwebtoken dotenv axios mongodb mongoose cors multer google-auth-library && npm run build"
     }
   }
 }
