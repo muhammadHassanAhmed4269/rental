@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 
@@ -11,7 +12,8 @@ mongoose
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
 // Middleware
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 // Routes
