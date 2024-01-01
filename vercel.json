@@ -6,24 +6,6 @@
       "use": "@vercel/node"
     }
   ],
-  "controllers":[
-     {
-      "src": "/(.*)",
-      "dest": "/"
-    }
-  ],
-  "middlewares":[
-     {
-      "src": "/(.*)",
-      "dest": "/"
-    }
-  ],
-  "models":[
-     {
-      "src": "/(.*)",
-      "dest": "/"
-    }
-  ],
   "routes":[
      {
       "src": "/(.*)",
