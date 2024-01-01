@@ -4,6 +4,7 @@ const ProductController = {
   browseProducts: async (req, res) => {
     try {
       const products = await Product.find(); // Retrieve all products
+      console.log(products);
       res.json(products);
     } catch (err) {
       console.error(err.message);

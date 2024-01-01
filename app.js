@@ -1,8 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const cors = require("cors");
+// const cors = require("cors");
 const app = express();
 
 // Middleware
@@ -16,6 +15,8 @@ const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
 const verifyToken = require("./middlewares/verifyToken");
 const dbConnector = require("./database/mongo");
+dbConnector;
+
 // const orderRoutes = require("./routes/orderRoutes");
 // const renterRoutes = require("./routes/renterRoutes");
 // const adminRoutes = require("./routes/adminRoutes");
@@ -37,6 +38,5 @@ app.use("/products", productRoutes);
 // Start Server
 const PORT = process.env.PORT || 9876;
 app.listen(PORT, () => {
-  dbConnector;
   console.log(`Server started on port ${PORT}`);
 });
