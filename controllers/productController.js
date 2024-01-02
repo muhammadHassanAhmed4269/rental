@@ -20,6 +20,7 @@ const ProductController = {
         availableDays,
         datePosted,
         priceRange,
+        category,
       } = req.query;
 
       const filters = {};
@@ -51,6 +52,10 @@ const ProductController = {
 
       if (availableDays) {
         filters.availableDays = { $gte: parseInt(availableDays) };
+      }
+
+      if (category) {
+        filters.category = category;
       }
 
       console.log(filters);
