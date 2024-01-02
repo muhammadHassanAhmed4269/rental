@@ -41,8 +41,8 @@ const ProductController = {
       let price = JSON.parse(priceRange);
       if (price && Array.isArray(price) && price.length === 2) {
         filters.price = {
-          $gte: JSON.parse(price[0]),
-          $lte: JSON.parse(price[1]),
+          $gte: price[0],
+          $lte: price[1],
         };
       }
 
@@ -53,8 +53,6 @@ const ProductController = {
       if (availableDays) {
         filters.availableDays = { $gte: parseInt(availableDays) };
       }
-
-      console.log(JSON.stringify(filters));
 
       const filteredProducts = await Product.find(filters);
       res.json(filteredProducts);
