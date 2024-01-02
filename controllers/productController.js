@@ -27,19 +27,23 @@ const ProductController = {
       if (location) {
         filters.location = {
           $geoWithin: {
-            $centerSphere: [JSON.parse(location), 1500 / 6371], // Assuming a 10km radius (10000 meters)
+            $centerSphere: [JSON.parse(location), 1500 / 6371],
           },
         };
       }
 
       if (datePosted) {
         filters.datePosted = {
-          $gte: datePosted,
+          $gte: new Date(datePosted), // Convert datePosted to Date object
         };
       }
 
-      if (priceRange) {
-        filters.priceRange = priceRange;
+      let price = JSON.parse(priceRange);
+      if (price && Array.isArray(price) && price.length === 2) {
+        filters.price = {
+          $gte: JSON.parse(price[0]),
+          $lte: JSON.parse(price[1]),
+        };
       }
 
       if (verificationStatus) {
