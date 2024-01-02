@@ -12,12 +12,21 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/api/(.*)",
       "dest": "client/src/index.js"
     },
     {
-      "src": "/client/(.*)",
+      "src": "/(.*)",
       "dest": "client/build/$1"
     }
-  ]
+  ],
+  "commands": {
+    "build": {
+      "use": "@now/static-build",
+      "src": "client",
+      "hooks": {
+        "build": "npm run build --prefix client"
+      }
+    }
+  }
 }
