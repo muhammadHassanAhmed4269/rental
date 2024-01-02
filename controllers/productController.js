@@ -34,30 +34,31 @@ const ProductController = {
 
       if (datePosted) {
         filters.datePosted = {
-          $gte: new Date(datePosted), // Convert datePosted to Date object
+          $gte: datePosted, // Convert datePosted to Date object
         };
       }
 
-      let price = JSON.parse(priceRange);
-      if (price && Array.isArray(price) && price.length === 2) {
+      if (priceRange) {
         filters.price = {
-          $gte: price[0],
-          $lte: price[1],
+          $gte: JSON.parse(priceRange)[0],
+          $lte: JSON.parse(priceRange)[1],
         };
       }
 
       if (verificationStatus) {
-        filters.verificationStatus = verificationStatus;
+        filters.verificationStatus = Boolean(verificationStatus);
       }
 
       if (availableDays) {
         filters.availableDays = { $gte: parseInt(availableDays) };
       }
 
+      console.log(filters);
+
       const filteredProducts = await Product.find(filters);
       res.json(filteredProducts);
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
       res.status(500).send("Server Error");
     }
   },
