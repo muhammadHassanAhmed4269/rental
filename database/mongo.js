@@ -1,5 +1,6 @@
 // Import required modules
 const mongoose = require("mongoose");
+const Product = require("../models/Product");
 require("dotenv").config();
 
 // DatabaseConnector class for handling MongoDB connections

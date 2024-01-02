@@ -11,7 +11,7 @@ app.use(cors());
 
 // Routes
 const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
+const customerRoutes = require("./routes/customerRoutes");
 const productRoutes = require("./routes/productRoutes");
 const verifyToken = require("./middlewares/verifyToken");
 const dbConnector = require("./database/mongo");
@@ -29,8 +29,9 @@ app.use("/auth", authRoutes);
 
 // app.use(verifyToken);
 
-app.use("/auth", userRoutes);
+app.use("/customers", customerRoutes);
 app.use("/products", productRoutes);
+
 // app.use("/orders", orderRoutes);
 // app.use("/orders", renterRoutes);
 // app.use("/admin", adminRoutes);

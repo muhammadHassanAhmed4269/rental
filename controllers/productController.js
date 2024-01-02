@@ -1,81 +1,106 @@
-const Product = require("../models/Product");
+const { isNotFound } = require("entity-checker");
+const Product = require("../models/Product"); // Your Product model
 
 const ProductController = {
-  browseProducts: async (req, res) => {
+  getProductListings: async (req, res) => {
     try {
-      const products = await Product.find(); // Retrieve all products
-      console.log(products);
+      const products = await Product.find().populate("owner", "username");
       res.json(products);
-    } catch (err) {
-      console.error(err.message);
+    } catch (error) {
+      console.error(error.message);
       res.status(500).send("Server Error");
     }
   },
 
-  filterProducts: async (req, res) => {
-    const {
-      location,
-      verificationStatus,
-      daysAvailable,
-      datePosted,
-      priceRange,
-    } = req.query;
+  filterProductListings: async (req, res) => {
     try {
-      // Use received query parameters to filter products from the database
-      // Example:
-      const filteredProducts = await Product.find({
+      const {
         location,
         verificationStatus,
-        daysAvailable,
+        availableDays,
         datePosted,
-        price: { $gte: priceRange.min, $lte: priceRange.max },
-      });
+        priceRange,
+      } = req.query;
+
+      const filters = {};
+
+      if (location) {
+        filters.location = {
+          $geoWithin: {
+            $centerSphere: [JSON.parse(location), 1500 / 6371], // Assuming a 10km radius (10000 meters)
+          },
+        };
+      }
+
+      if (datePosted) {
+        filters.datePosted = {
+          $gte: datePosted,
+        };
+      }
+
+      if (priceRange) {
+        filters.priceRange = priceRange;
+      }
+
+      if (verificationStatus) {
+        filters.verificationStatus = verificationStatus;
+      }
+
+      if (availableDays) {
+        filters.availableDays = { $gte: parseInt(availableDays) };
+      }
+
+      console.log(JSON.stringify(filters));
+
+      const filteredProducts = await Product.find(filters);
       res.json(filteredProducts);
-    } catch (err) {
-      console.error(err.message);
+    } catch (error) {
+      console.error(error.message);
       res.status(500).send("Server Error");
     }
   },
 
   updateProductDetails: async (req, res) => {
-    const productId = req.params.id;
-    const { details } = req.body;
     try {
-      // Find the product by ID and update its details
-      const updatedProduct = await Product.findByIdAndUpdate(
-        productId,
-        { details },
-        { new: true }
-      );
-      res.json(updatedProduct);
-    } catch (err) {
-      console.error(err.message);
+      const { _id } = req.params;
+      const {
+        /* Update fields */
+      } = req.body;
+
+      const product = await Product.findById(_id);
+
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+
+      // Update product details
+
+      await product.save();
+      res.json({ message: "Product details updated successfully" });
+    } catch (error) {
+      console.error(error.message);
       res.status(500).send("Server Error");
     }
   },
 
   uploadProductPictures: async (req, res) => {
-    const productId = req.params.id;
-    const { pictures } = req.body;
     try {
-      // Find the product by ID and update its pictures array
-      const product = await Product.findById(productId);
-      if (!product) {
+      const { _id } = req.params;
+      const product = await Product.findById(_id);
+
+      if (isNotFound(product)) {
         return res.status(404).json({ message: "Product not found" });
       }
 
-      if (product.pictures.length + pictures.length > 5) {
-        return res
-          .status(400)
-          .json({ message: "Cannot upload more than 5 pictures" });
-      }
+      const files = req.files;
+      const imagePaths = files.slice(0, 4).map((file) => file.path);
 
-      product.pictures.push(...pictures);
+      product.images = imagePaths;
+
       await product.save();
-
-      res.json(product);
-    } catch (err) {
-      console.error(err.message);
+      res.json({ message: "Pictures uploaded successfully" });
+    } catch (error) {
+      console.error(error.message);
       res.status(500).send("Server Error");
     }
   },
