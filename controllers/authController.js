@@ -1,15 +1,40 @@
 const User = require("../models/Customer");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { OAuth2Client } = require("google-auth-library");
+const { OAuth2Client, auth } = require("google-auth-library");
 const { default: axios } = require("axios");
 const { isNotFound } = require("entity-checker");
+const Token = require("../models/Token");
 
-const generateToken = (user) => {
+const generateToken = async (user) => {
   const payload = {
     user: { _id: user._id },
   };
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1y" });
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1y" });
+
+  const getToken = await Token.findOne({ assignedTo: payload.user._id });
+  if (isNotFound(getToken)) {
+    const newToken = new Token({
+      token,
+      status: "Valid",
+      assignedTo: payload.user._id,
+    });
+
+    await newToken.save();
+    return newToken.token;
+  } else if (getToken && getToken.status === "Expired") {
+    const newToken = new Token({
+      token,
+      status: "Valid",
+      assignedTo: payload.user._id,
+    });
+
+    await newToken.save();
+    return newToken.token;
+  } else {
+    return getToken.token;
+  }
 };
 
 const handleServerError = (err, res) => {
@@ -32,7 +57,7 @@ const registerCustomer = async (req, res) => {
       });
 
       await newUser.save();
-      const token = generateToken(newUser);
+      const token = await generateToken(newUser);
       return res.status(200).json({ token });
     }
 
@@ -57,7 +82,7 @@ const loginCustomer = async (req, res) => {
       // const isPasswordValid = await bcrypt.compare(user.password, password);
       // console.log(isPasswordValid);
       // if (isPasswordValid) {
-      const token = generateToken(user);
+      const token = await generateToken(user);
       return res.status(200).json({ token });
       // } else {
       //   return res.status(400).json({ message: "Invalid credentials" });
