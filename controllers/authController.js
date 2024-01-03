@@ -7,7 +7,7 @@ const { isNotFound } = require("entity-checker");
 
 const generateToken = (user) => {
   const payload = {
-    user: { id: user._id },
+    user: { _id: user._id },
   };
   return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1y" });
 };

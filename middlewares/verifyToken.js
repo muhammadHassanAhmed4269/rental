@@ -1,21 +1,22 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/Customer");
+const { isNotFound } = require("entity-checker");
 
 const verifyToken = (req, res, next) => {
   const token = req.headers.authorization;
 
-  if (!token) {
-    return res.status(403).json({ message: "Token is not provided" });
+  if (isNotFound(token)) {
+    return res.status(403).json({ message: "Unauthorized request" });
   }
 
-  jwt.verify(token, "your-secret-key", async (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: "Failed to authenticate token" });
     }
-
     try {
-      const user = await User.findById(decoded.userId);
-      if (!user) {
+      const user = await User.findById(decoded.user._id);
+      console.log(user);
+      if (isNotFound(user)) {
         return res.status(404).json({ message: "User not found" });
       }
       req.user = user;

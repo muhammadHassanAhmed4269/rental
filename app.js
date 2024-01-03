@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", authRoutes);
 
-// app.use(verifyToken);
+app.use(verifyToken);
 
 app.use("/customers", customerRoutes);
 app.use("/products", productRoutes);
