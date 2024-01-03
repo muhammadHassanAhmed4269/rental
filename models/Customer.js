@@ -17,7 +17,6 @@ const customerSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    unique: true,
   },
   password: { type: String, required: true },
   googleId: { type: String },

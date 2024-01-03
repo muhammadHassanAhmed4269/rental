@@ -46,9 +46,30 @@ const registerCustomer = async (req, res) => {
   const { username, email, phoneNumber, password } = req.body;
 
   try {
-    const user = await User.findOne({ $or: [{ email }, { phoneNumber }] });
+    const user = await User.findOne({
+      $or: [{ email }, { phoneNumber }],
+      password,
+    });
 
     if (isNotFound(user)) {
+      const formData = {};
+
+      if (username) {
+        formData.username = username;
+      }
+
+      if (email) {
+        formData.email = email;
+      }
+
+      if (phoneNumber) {
+        formData.phoneNumber = phoneNumber;
+      }
+
+      if (password) {
+        formData.password = password;
+      }
+
       const newUser = new User({
         username,
         email,
@@ -59,9 +80,9 @@ const registerCustomer = async (req, res) => {
       await newUser.save();
       const token = await generateToken(newUser);
       return res.status(200).json({ token });
+    } else {
+      return res.status(400).json({ message: "User already exists" });
     }
-
-    return res.status(400).json({ message: "User already exists" });
   } catch (err) {
     handleServerError(err, res);
   }
