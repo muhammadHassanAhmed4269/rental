@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const customerSchema = new mongoose.Schema({
-  username: { type: String, required: true },
+  username: { type: String },
   email: {
     type: String,
     unique: true,
@@ -19,13 +19,13 @@ const customerSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     unique: true,
-    sparse: true, // Allows null/empty strings for unique field
-    validate: {
-      validator: function (v) {
-        return /^\d{10}$/.test(v); // Basic phone number validation (10 digits)
-      },
-      message: (props) => `${props.value} is not a valid phone number!`,
-    },
+    // sparse: true, // Allows null/empty strings for unique field
+    // validate: {
+    //   validator: function (v) {
+    //     return /^\d{10}$/.test(v); // Basic phone number validation (10 digits)
+    //   },
+    //   message: (props) => `${props.value} is not a valid phone number!`,
+    // },
   },
   password: { type: String, required: true },
   googleId: { type: String },
