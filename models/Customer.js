@@ -6,7 +6,6 @@ const customerSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
-    required: true,
     trim: true,
     lowercase: true,
     validate: {
@@ -19,13 +18,6 @@ const customerSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     unique: true,
-    // sparse: true, // Allows null/empty strings for unique field
-    // validate: {
-    //   validator: function (v) {
-    //     return /^\d{10}$/.test(v); // Basic phone number validation (10 digits)
-    //   },
-    //   message: (props) => `${props.value} is not a valid phone number!`,
-    // },
   },
   password: { type: String, required: true },
   googleId: { type: String },
@@ -48,17 +40,17 @@ const customerSchema = new mongoose.Schema({
 });
 
 // Hash password before saving
-customerSchema.pre("save", async function (next) {
-  if (this.isModified("password")) {
-    try {
-      const hashedPassword = await bcrypt.hash(this.password, 10);
-      this.password = hashedPassword;
-    } catch (error) {
-      return next(error);
-    }
-  }
-  return next();
-});
+// customerSchema.pre("save", async function (next) {
+//   if (this.isModified("password")) {
+//     try {
+//       const hashedPassword = await bcrypt.hash(this.password, 10);
+//       this.password = hashedPassword;
+//     } catch (error) {
+//       return next(error);
+//     }
+//   }
+//   return next();
+// });
 
 const Customer = mongoose.model("Customer", customerSchema);
 

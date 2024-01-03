@@ -3,12 +3,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const { default: axios } = require("axios");
+const { isNotFound } = require("entity-checker");
 
 const generateToken = (user) => {
   const payload = {
-    user: { id: user.id },
+    user: { id: user._id },
   };
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 3600 });
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1y" });
 };
 
 const handleServerError = (err, res) => {
@@ -22,42 +23,46 @@ const registerCustomer = async (req, res) => {
   try {
     const user = await User.findOne({ $or: [{ email }, { phoneNumber }] });
 
-    if (user) {
-      return res.status(400).json({ message: "User already exists" });
+    if (isNotFound(user)) {
+      const newUser = new User({
+        username,
+        email,
+        phoneNumber,
+        password,
+      });
+
+      await newUser.save();
+      const token = generateToken(newUser);
+      return res.status(200).json({ token });
     }
 
-    user = new User({
-      username,
-      email,
-      phoneNumber,
-      password,
-    });
-
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
-
-    await user.save();
-    const token = generateToken(user);
-    res.json({ token });
+    return res.status(400).json({ message: "User already exists" });
   } catch (err) {
     handleServerError(err, res);
   }
 };
 
 const loginCustomer = async (req, res) => {
-  const { emailOrPhone, password } = req.body;
+  const { email, phoneNumber, password } = req.body;
 
   try {
     const user = await User.findOne({
-      $or: [{ email: emailOrPhone }, { phoneNumber: emailOrPhone }],
+      $or: [{ email }, { phoneNumber }],
+      password,
     });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (isNotFound(user)) {
       return res.status(400).json({ message: "Invalid credentials" });
+    } else {
+      // const isPasswordValid = await bcrypt.compare(user.password, password);
+      // console.log(isPasswordValid);
+      // if (isPasswordValid) {
+      const token = generateToken(user);
+      return res.status(200).json({ token });
+      // } else {
+      //   return res.status(400).json({ message: "Invalid credentials" });
+      // }
     }
-
-    const token = generateToken(user);
-    res.json({ token });
   } catch (err) {
     handleServerError(err, res);
   }
