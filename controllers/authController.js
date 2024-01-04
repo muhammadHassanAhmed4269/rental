@@ -129,7 +129,7 @@ const loginWithGoogle = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    if (!user) {
+    if (isNotFound(user)) {
       user = new User({
         username: name,
         email,
@@ -155,7 +155,7 @@ const loginWithFacebook = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    if (!user) {
+    if (isNotFound(user)) {
       user = new User({
         username: name,
         email,
