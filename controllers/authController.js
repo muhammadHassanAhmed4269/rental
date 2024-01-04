@@ -117,21 +117,30 @@ const loginCustomer = async (req, res) => {
 const loginWithGoogle = async (req, res) => {
   const { tokenId } = req.body;
   console.log({ tokenId });
+
   try {
+    // Initialize the OAuth2Client with your Google Client ID
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+    console.log({ client });
+
+    // Verify the Google ID Token
     const ticket = await client.verifyIdToken({
       idToken: tokenId,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
 
-    console.log({ client, ticket });
-
+    // Get the user payload from the verified token
     const payload = ticket.getPayload();
     const { email, name } = payload;
 
+    console.log({ payload });
+
+    // Check if the user exists in your database
     let user = await User.findOne({ email });
 
-    if (isNotFound(user)) {
+    // If user does not exist, create a new user
+    if (!user) {
       user = new User({
         username: name,
         email,
@@ -139,10 +148,15 @@ const loginWithGoogle = async (req, res) => {
       await user.save();
     }
 
+    // Generate a token for the user (You should have your own token generation logic)
     const token = generateToken(user);
+
+    // Respond with the generated token
     res.json({ token });
   } catch (err) {
-    handleServerError(err, res);
+    // Handle errors
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
