@@ -116,7 +116,7 @@ const loginCustomer = async (req, res) => {
 
 const loginWithGoogle = async (req, res) => {
   const { tokenId } = req.body;
-
+  console.log({ tokenId });
   try {
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
     const ticket = await client.verifyIdToken({
@@ -146,6 +146,7 @@ const loginWithGoogle = async (req, res) => {
 
 const loginWithFacebook = async (req, res) => {
   const { accessToken } = req.body;
+  console.log({ accessToken });
 
   try {
     const response = await axios.get(
