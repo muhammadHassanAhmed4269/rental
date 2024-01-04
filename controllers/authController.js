@@ -124,6 +124,8 @@ const loginWithGoogle = async (req, res) => {
       audience: process.env.GOOGLE_CLIENT_ID,
     });
 
+    console.log({ client, ticket });
+
     const payload = ticket.getPayload();
     const { email, name } = payload;
 
