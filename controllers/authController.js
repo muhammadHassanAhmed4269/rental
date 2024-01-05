@@ -1,7 +1,7 @@
 const User = require("../models/Customer");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { OAuth2Client, auth } = require("google-auth-library");
+const { OAuth2Client } = require("google-auth-library");
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 const { default: axios } = require("axios");
@@ -45,7 +45,7 @@ const handleServerError = (err, res) => {
 };
 
 const registerCustomer = async (req, res) => {
-  const { username, email, phoneNumber, password } = req.body;
+  const { name, email, phoneNumber, password } = req.body;
 
   try {
     const user = await User.findOne({
@@ -56,8 +56,8 @@ const registerCustomer = async (req, res) => {
     if (isNotFound(user)) {
       const formData = {};
 
-      if (username) {
-        formData.username = username;
+      if (name) {
+        formData.name = name;
       }
 
       if (email) {
@@ -73,7 +73,7 @@ const registerCustomer = async (req, res) => {
       }
 
       const newUser = new User({
-        username,
+        name,
         email,
         phoneNumber,
         password,
@@ -117,23 +117,41 @@ const loginCustomer = async (req, res) => {
 };
 
 const loginWithGoogle = async (req, res) => {
+  const { accessToken } = req.body;
+
   try {
-    const { token } = req.body;
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: GOOGLE_CLIENT_ID,
-    });
-    console.log({ ticket });
-    console.log({ payload: ticket.getPayload() });
-    return { payload: ticket.getPayload() };
-  } catch (error) {
-    return { error: "Invalid user detected. Please try again" };
+    const userInfoResponse = await axios.get(
+      `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${accessToken}`
+    );
+
+    if (userInfoResponse.data.error) {
+      return res.status(401).json({ message: "Invalid access token" });
+    }
+
+    const { email } = userInfoResponse.data;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = new User({
+        email,
+        googleId: userInfoResponse.data.sub,
+      });
+      await user.save();
+    }
+
+    const token = await generateToken(user);
+
+    res.json({ token });
+  } catch (err) {
+    // Handle errors
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
 const loginWithFacebook = async (req, res) => {
   const { accessToken } = req.body;
-  console.log({ accessToken });
 
   try {
     const response = await axios.get(
@@ -145,13 +163,14 @@ const loginWithFacebook = async (req, res) => {
 
     if (isNotFound(user)) {
       user = new User({
-        username: name,
+        name,
         email,
+        facebookId: response.data.id,
       });
       await user.save();
     }
 
-    const token = generateToken(user);
+    const token = await generateToken(user);
     res.json({ token });
   } catch (err) {
     handleServerError(err, res);
