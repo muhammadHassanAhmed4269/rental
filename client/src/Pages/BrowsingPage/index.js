@@ -34,6 +34,7 @@ const BrowsingPage = () => {
   const [prodData, setProdData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+<<<<<<< HEAD
   const options = {
     year: "numeric",
     month: "2-digit",
@@ -51,6 +52,12 @@ const BrowsingPage = () => {
     const month = formattedDate.split("/")[0];
     const day = formattedDate.split("/")[1];
     const year = formattedDate.split("/")[2];
+=======
+  const handleFilters = () => {
+    const day = startDate.toLocaleDateString().split("/")[0];
+    const month = startDate.toLocaleDateString().split("/")[1];
+    const year = startDate.toLocaleDateString().split("/")[2];
+>>>>>>> 605fcb3f9061fa5612ce45179bdacf62f4502f81
     const date = `${year}-${month}-${day}`;
     const range = [rangeMin, rangeMax];
     console.log(status, date, days, range);

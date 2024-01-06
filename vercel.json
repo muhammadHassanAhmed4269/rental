@@ -2,7 +2,11 @@
   "version": 2,
   "builds": [
     {
+<<<<<<< HEAD
       "src": "client/src",
+=======
+      "src": "client/src/index.js",
+>>>>>>> 605fcb3f9061fa5612ce45179bdacf62f4502f81
       "use": "@vercel/static-build",
       "config": {}
     }
